@@ -29,8 +29,20 @@ GameEngine.prototype.init = function(){
 
 GameEngine.prototype.setup = function(){
 
+	// Init sound Manager
+	soundManager.init();
+
+	// Add Assets to the AssetManager queue to be loaded later
+	assetManager.queueDownload('sounds/background.mp3');
+	assetManager.queueDownload('sounds/laser.wav');
+
+	// Download all the assets
+	assetManager.downloadAll(function(){console.log('Assets loaded!');})
+
 };
 
 GameEngine.prototype.update = function(){
 
 };
+
+var gameEngine = new GameEngine();

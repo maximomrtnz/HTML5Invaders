@@ -22,11 +22,14 @@
 //
 // http://kodogames.com/demo/web-audio-api-tutorial
 // http://www.html5rocks.com/en/tutorials/webaudio/intro/
+// https://github.com/fredsa/gritsgame/blob/master/src/client/scripts/core/soundManager.js
 
 function SoundManager(){
 
-	this.context;
+	this.context = null;
 	this.sounds = {};
+	this.volume = 2;
+	this.mainNode = null;
 
 };
 
@@ -35,7 +38,14 @@ SoundManager.prototype.init = function(){
 	try {
 
     	window.AudioContext = window.AudioContext||window.webkitAudioContext;
+    	
     	this.context = new AudioContext();
+
+    	this.mainNode = this.context.createGain();
+		
+		this.mainNode.gain.value = this.volume;
+
+		this.mainNode.connect(this.context.destination);
 
   	}catch(e) {
   		
@@ -46,28 +56,91 @@ SoundManager.prototype.init = function(){
 };
 
 
-SoundManager.prototype.loadSound = function(url, callbackOnDone, callbackOnError) {
+SoundManager.prototype.loadSound = function(path, callbackOnDone, callbackOnError) {
 	
+	var that = this;
+
 	var request = new XMLHttpRequest();
-  	request.open('GET', url, true);
+  	request.open('GET', path, true);
   	request.responseType = 'arraybuffer';
 
   	request.onload = function() {
-    	this.context.decodeAudioData(request.response, 
+    	that.context.decodeAudioData(request.response, 
 	    	function(buffer) { // on susses
-	      	
-	      		this.clips[url] = buffer;
+	      		
+	      		var sound = { buffer:buffer };
+
+	      		that.sounds[path] = sound;
 	    		
 	    		callbackOnDone(buffer);
 
-	    	}, function(){ // on error
+	    	}, function(error){ // on error
 
-	    		callbackOnError();
+	    		callbackOnError(error);
+
+	    		console.log(error);
 
 	    	});
   	};
 
   	request.send();
+
+};
+
+
+SoundManager.prototype.playSound = function(path, loop){
+
+	var sound = this.sounds[path];
+
+	if(sound == null){
+    	return;
+	}
+
+	var source = this.context.createBufferSource();
+  	
+  	source.buffer = sound.buffer;
+
+  	// loop the audio?
+  	source.loop = loop;
+
+  	// connect the source to the main node
+  	source.connect(this.mainNode);
+
+  	// set the gain (volume)
+  	//source.gain.value = this.volume;
+
+  	// play sound
+  	source.start(0);
+
+};
+
+SoundManager.prototype.muteSound = function(path){
+
+	var sound = this.sounds[path];
+
+	if(sound == null){
+    	return;
+	}
+
+	sound.gainNode.gain.value = 0;
+
+};
+
+
+SoundManager.prototype.muteAll = function(){
+
+	this.mainNode.gain.value = 0;
+
+};
+
+
+SoundManager.prototype.togglemute = function(){
+
+	if(this.mainNode.gain.value > 0){
+		this.muteAll();
+	}else{
+		this.mainNode.gain.value = this.volume;
+	}
 
 };
 

@@ -47,10 +47,12 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
 	    
 	    var path = this.downloadQueue[i];
 
+	    var that = this;
+
 	    if(this.isImgFilename(path)){
 
 		    var img = new Image();
-		    var that = this;
+		    
 		    img.addEventListener("load", function() {
 		    	that.successCount += 1;
 		    	if (that.isDone()) {
@@ -75,7 +77,7 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
 		    		downloadCallback();
 	    		}
 		    },
-		    function() {
+		    function(error) {
 		    	that.errorCount += 1;
 		    	if (that.isDone()) {
 		    		downloadCallback();
@@ -107,3 +109,5 @@ AssetManager.prototype.isImgFilename = function(path){
 AssetManager.prototype.isSoundFilename = function(path){
 	return  path.indexOf('.ogg') != -1 || path.indexOf('.wav') != -1 || path.indexOf('.mp3') != -1 || path.indexOf('.m4a') != -1;
 };
+
+var assetManager = new AssetManager();
