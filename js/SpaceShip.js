@@ -19,37 +19,19 @@
 //       Maximo Martinez, maximomrtnz@gmail.com
 //
 
-// This class was wrote based on the following tutorials
+/** Represent the space ship which is the entity that a user can use to play the game **/
 
-// http://jlongster.com/Making-Sprite-based-Games-with-Canvas
-// http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
-
-
-/** Class representing an object in the scene. */
-
-/**
- * Creates an instance of Entity.
- *
- * @constructor
- */
-function Entity() {
-	this.positionX;
-	this.positionY;
-	this.sprite;
-}
-
-Entity.prototype.init = function(positionX, positionY, sprite){
-	this.positionX = positionX;
-	this.positionY = positionY;
-	this.sprite = sprite;
-};
-
-Entity.prototype.draw = function(ctx) {
-	this.sprite.render(ctx);
-};
-
-Entity.prototype.move = function() {};
-
-Entity.prototype.isCollidableWith = function() {
+function SpaceShip(){
 
 };
+
+SpaceShip.prototype.move = function(){
+	this.sprite.update(this.positionX,this.positionY);
+};
+
+SpaceShip.prototype.fire = function() {
+
+};
+
+/** Set SpaceShip to inherit properties from Entity **/
+SpaceShip.prototype = new Entity();

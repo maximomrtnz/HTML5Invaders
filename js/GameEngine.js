@@ -20,29 +20,87 @@
 
 function GameEngine() {
 
+	this.context = null;
+	this.canvas = null;
+	this.background = null;
+	this.spaceShip = null;	
+
 };
 
 
 GameEngine.prototype.init = function(){
 
-};
-
-GameEngine.prototype.setup = function(){
+	// Create the canvas
+	this.canvas = document.createElement("canvas");
+	this.context = this.canvas.getContext("2d");
+	this.canvas.width = 640;
+	this.canvas.height = 380;
+	this.canvas.scale = 1;
+	document.body.appendChild(this.canvas);
 
 	// Init sound Manager
 	soundManager.init();
 
 	// Add Assets to the AssetManager queue to be loaded later
+	
+	// Adding Sounds
 	assetManager.queueDownload('sounds/background.mp3');
 	assetManager.queueDownload('sounds/laser.wav');
 
+	// Adding Images
+	assetManager.queueDownload('images/black.png');
+	assetManager.queueDownload('images/sheet.svg');	
+
 	// Download all the assets
-	assetManager.downloadAll(function(){console.log('Assets loaded!');})
+
+	var that = this;
+
+	assetManager.downloadAll(function(){that.setup();});
+
+};
+
+GameEngine.prototype.setup = function(){
+
+	// Create Background
+	this.background = new BackgroundSprite();
+	this.background.init(assetManager.getAsset('images/black.png'),0,0,this.canvas.width,this.canvas.height,true);
+
+	// Create the SpaceShip Sprite
+
+	// Space ship Sprite
+	var spaceShipSprite = new Sprite();
+	spaceShipSprite.init(assetManager.getAsset('images/sheet.svg'),0,0,150,120,0,0);
+
+	this.spaceShip = new SpaceShip();
+	this.spaceShip.init(0,0,spaceShipSprite);
+
+	// Run the Game
+	this.run();
 
 };
 
 GameEngine.prototype.update = function(){
 
+	this.spaceShip.move();
+
+};
+
+GameEngine.prototype.render = function(){
+
+	// Render Background
+	this.background.render(this.context);
+
+	this.spaceShip.draw(this.context);
+
+};
+
+GameEngine.prototype.run = function(){
+
+	this.update();
+	this.render();
+
+	var that = this;
+	requestAnimFrame(function(){that.run();});
 };
 
 var gameEngine = new GameEngine();

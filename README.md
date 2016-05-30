@@ -1,2 +1,3 @@
-# HTML5Invaders
-HTML5 Game
+# HTML5 Invaders
+
+## Assets from OpenGameArt.org

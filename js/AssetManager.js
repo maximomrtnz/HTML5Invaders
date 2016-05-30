@@ -19,7 +19,7 @@
 //       Maximo Martinez, maximomrtnz@gmail.com
 
 
-// This class was written based on the following tutorials:
+// This class was wrote based on the following tutorials:
 //
 // http://www.html5rocks.com/en/tutorials/games/assetmanager/
 // http://www.onextrapixel.com/2012/09/24/assets-loading-in-html5-game-development/
@@ -103,7 +103,7 @@ AssetManager.prototype.getProcess = function() {
 
 
 AssetManager.prototype.isImgFilename = function(path){
-	return  path.indexOf('.jpg') != -1 || path.indexOf('.png') != -1 || path.indexOf('.gif') != -1 || path.indexOf('.wp') != -1;
+	return  path.indexOf('.svg') != -1 || path.indexOf('.jpg') != -1 || path.indexOf('.png') != -1 || path.indexOf('.gif') != -1 || path.indexOf('.wp') != -1;
 };
 
 AssetManager.prototype.isSoundFilename = function(path){

@@ -19,37 +19,42 @@
 //       Maximo Martinez, maximomrtnz@gmail.com
 //
 
-// This class was wrote based on the following tutorials
 
+// This class was wrote based on the following tutorials:
+//
 // http://jlongster.com/Making-Sprite-based-Games-with-Canvas
-// http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
 
 
-/** Class representing an object in the scene. */
+/**A "sprite" is an image that is rendered to represent an entity.**/
 
 /**
- * Creates an instance of Entity.
+ * Creates an instance of Sprite.
  *
  * @constructor
  */
-function Entity() {
-	this.positionX;
-	this.positionY;
-	this.sprite;
-}
-
-Entity.prototype.init = function(positionX, positionY, sprite){
-	this.positionX = positionX;
-	this.positionY = positionY;
-	this.sprite = sprite;
+function Sprite(){
+	this.image;
+	this.sourceX;
+	this.sourceY;
+	this.sourceWidth;
+	this.sourceHeight;
 };
 
-Entity.prototype.draw = function(ctx) {
-	this.sprite.render(ctx);
+Sprite.prototype.init = function(image, sourceX, sourceY, sourceWidth, sourceHeight,destinationX, destinationY){
+	this.image = image;
+	this.sourceX = sourceX;
+	this.sourceY = sourceY;
+	this.sourceWidth = sourceWidth;
+	this.sourceHeight = sourceHeight;
+	this.destinationX = destinationX;
+	this.destinationY = destinationY;
 };
 
-Entity.prototype.move = function() {};
+Sprite.prototype.update = function(destinationX, destinationY){
+	this.destinationX = destinationX;
+	this.destinationY = destinationY;
+};
 
-Entity.prototype.isCollidableWith = function() {
-
+Sprite.prototype.render = function(ctx){
+	ctx.drawImage(this.image,this.sourceX,this.sourceY,this.sourceWidth,this.sourceHeight,this.destinationX,this.destinationY,this.sourceWidth,this.sourceHeight);
 };

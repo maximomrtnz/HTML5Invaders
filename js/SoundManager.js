@@ -18,7 +18,7 @@
 // Author:
 //       Maximo Martinez, maximomrtnz@gmail.com
 
-// This class was written based on the following tutorials:
+// This class was wrote based on the following tutorials:
 //
 // http://kodogames.com/demo/web-audio-api-tutorial
 // http://www.html5rocks.com/en/tutorials/webaudio/intro/
