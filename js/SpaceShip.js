@@ -25,13 +25,31 @@ function SpaceShip(){
 
 };
 
+/** Set SpaceShip to inherit properties from Entity **/
+SpaceShip.prototype = new Entity();
+
+
+/**
+ * Move the spaceship
+ *
+ * @override
+ * @this {SpaceShip}
+ */
 SpaceShip.prototype.move = function(){
+
+	if(inputManager.state(INPUT_ACTIONS.RIGHT)){
+		this.positionX+=this.speed;
+	}else if(inputManager.state(INPUT_ACTIONS.LEFT)){
+		this.positionX-=this.speed;
+	}else if(inputManager.state(INPUT_ACTIONS.UP)){
+		this.positionY-=this.speed;
+	}else if(inputManager.state(INPUT_ACTIONS.DOWN)){
+		this.positionY+=this.speed;
+	}
+
 	this.sprite.update(this.positionX,this.positionY);
 };
 
 SpaceShip.prototype.fire = function() {
 
 };
-
-/** Set SpaceShip to inherit properties from Entity **/
-SpaceShip.prototype = new Entity();

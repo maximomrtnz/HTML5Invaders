@@ -38,6 +38,13 @@ GameEngine.prototype.init = function(){
 	this.canvas.scale = 1;
 	document.body.appendChild(this.canvas);
 
+	// Init Input manager
+	inputManager.init();
+
+	// Add listener to inputs
+	document.addEventListener('keydown', function(event){inputManager.onKeyDown(event);}, false);
+    document.addEventListener('keyup', function(event){inputManager.onKeyUp(event);}, false);
+
 	// Init sound Manager
 	soundManager.init();
 
@@ -72,7 +79,7 @@ GameEngine.prototype.setup = function(){
 	spaceShipSprite.init(assetManager.getAsset('images/sheet.svg'),0,0,150,120,0,0);
 
 	this.spaceShip = new SpaceShip();
-	this.spaceShip.init(0,0,spaceShipSprite);
+	this.spaceShip.init(0,0,spaceShipSprite,2);
 
 	// Run the Game
 	this.run();

@@ -36,12 +36,14 @@ function Entity() {
 	this.positionX;
 	this.positionY;
 	this.sprite;
+	this.speed;
 }
 
-Entity.prototype.init = function(positionX, positionY, sprite){
+Entity.prototype.init = function(positionX, positionY, sprite, speed){
 	this.positionX = positionX;
 	this.positionY = positionY;
 	this.sprite = sprite;
+	this.speed = speed;
 };
 
 Entity.prototype.draw = function(ctx) {
