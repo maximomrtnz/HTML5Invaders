@@ -55,7 +55,7 @@ BackgroundSprite.prototype.render = function(ctx){
 	}
 	
 	ctx.fillStyle = this.pattern;
-    ctx.fillRect(this.destinationX, this.destinationY, this.destinationWidth, this.destinationHeight);
+    	ctx.fillRect(this.destinationX, this.destinationY, this.destinationWidth, this.destinationHeight);
 
 };
 
